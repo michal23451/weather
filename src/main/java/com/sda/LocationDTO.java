@@ -2,9 +2,6 @@ package com.sda;
 
 import lombok.*;
 
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
 
 @Getter
 @Setter

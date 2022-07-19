@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -24,4 +26,6 @@ public class Location {
     private Integer latitude;
     @Column(name = "created_date")
     private Instant createdDate;
+    @OneToMany(mappedBy = "location")
+    Set<Forecast> locations = new HashSet<>();
 }
