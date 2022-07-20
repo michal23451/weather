@@ -17,8 +17,8 @@ public class UserInterface {
             System.out.println("\nWitaj w aplikacji pogodowej. Co chcesz zrobić?");
             System.out.println("1. Dodać lokalizację.");
             System.out.println("2. Wyświetl wszystkie lokalizacje.");
-            System.out.println("3. Pobierz dane pogodowe.");
-            System.out.println("9. TESTOWO - Wyświetl lokalizację o zadanym id.");
+            System.out.println("3. Pobierz dane pogodowe dla lokalizacji o podanym id.");
+            //System.out.println("9. TESTOWO - Wyświetl lokalizację o zadanym id.");
             System.out.println("0. Zamknąć aplikację.");
 
             int option = scanner.nextInt();
@@ -32,7 +32,7 @@ public class UserInterface {
                     allLocation(scanner);
                     break;
                 case 3:
-                    // TODO: 19.07.2022  
+                    forecastById(scanner);
                     break;
                 case 9:
                     locationById(scanner);
@@ -75,6 +75,16 @@ public class UserInterface {
         System.out.println("Wysyłam HTTP request: " + httpRequest);
         String httpResponse = locationController.getLocationById(httpRequest);
         System.out.println("Odpowiedź z serwera:  " + httpResponse);
+    }
+
+    public void forecastById(Scanner scanner) {
+        System.out.print("Podaj id lokalizacji: ");
+        Integer id = scanner.nextInt();
+        System.out.print("Podaj dzień, dla którego chcesz wyświetlić prognozę [0-dzisiaj, 1- jutro itd.]: ");
+        Integer day = scanner.nextInt();
+        ExternalForacastClient externalForacastClient = new ExternalForacastClient();
+        System.out.println(externalForacastClient.getForacast(50,19, 0));
+
     }
 
 
