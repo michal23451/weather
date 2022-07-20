@@ -29,7 +29,7 @@ public class Application {
         UserInterface userInterface = new UserInterface(locationController);
         userInterface.run();
 
-    }
+        }
 }
 
 
