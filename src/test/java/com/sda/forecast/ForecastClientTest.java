@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ForecastClientTest {
 
     @Test
-    void test() {
+    void getForecastClient_returnsCorrectForecast() {
         // given
         ForecastClient forecastClient = new ForecastClient();
         // when
