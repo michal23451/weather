@@ -36,8 +36,7 @@ public class ForecastDBRepository implements ForecastRepository {
         Session session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
-            Query<Forecast> select = session.createQuery("SELECT f FROM Forecast f WHERE locationId = :id", Forecast.class);
-            select.setParameter("locationId", location.getId());
+            Query<Forecast> select = session.createQuery("SELECT f FROM Forecast f WHERE f.location = :location AND", Forecast.class);
             transaction.commit();
             session.close();
             return null;

@@ -37,10 +37,6 @@ public class Application {
         UserInterface userInterface = new UserInterface(locationController);
         userInterface.run();
 
-        ForecastDBRepository forecastDBRepository = new ForecastDBRepository(sessionFactory);
-        Optional<Forecast> activeForecast = forecastDBRepository.getActiveForecast(new Location(), Instant.now(), Instant.now());
-        Forecast forecast = activeForecast.get();
-        System.out.println(forecast);
 
     }
 
