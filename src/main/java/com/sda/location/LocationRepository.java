@@ -1,4 +1,4 @@
-package com.sda;
+package com.sda.location;
 
 import java.util.List;
 import java.util.Optional;

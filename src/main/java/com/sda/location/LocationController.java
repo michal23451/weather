@@ -1,13 +1,10 @@
-package com.sda;
+package com.sda.location;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class LocationController {
@@ -27,7 +24,7 @@ public class LocationController {
         }
     }
 
-    private LocationDTO mapToLocationDTO(Location location) {
+     LocationDTO mapToLocationDTO(Location location) {
         LocationDTO response = new LocationDTO();
         response.setId(location.getId());
         response.setCity(location.getCity());

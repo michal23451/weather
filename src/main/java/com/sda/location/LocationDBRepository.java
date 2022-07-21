@@ -1,13 +1,12 @@
-package com.sda;
+package com.sda.location;
 
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
-import javax.persistence.NoResultException;
-import java.util.IllformedLocaleException;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,17 +1,16 @@
-package com.sda;
+package com.sda.location;
 
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class LocationService {
 
     private final LocationRepository locationRepository;
 
-    public Location create(String city, String region, String country, Integer longitude, Integer latitude) {
+    Location create(String city, String region, String country, Integer longitude, Integer latitude) {
         if (city == null || city.isBlank()) {
             throw new IllegalArgumentException("Należy podać miejscowość!");
         }
@@ -38,11 +37,11 @@ public class LocationService {
         return savedLocation;
     }
 
-    public List<Location> getAll() {
+    List<Location> getAll() {
         return locationRepository.findAll();
     }
 
-    public Location getById(Long id) {
+    Location getById(Long id) {
         if (id < 0) {
             throw new IllegalArgumentException("Id nie może być mniejsze od 0!");
         }

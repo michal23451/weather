@@ -1,5 +1,6 @@
-package com.sda;
+package com.sda.location;
 
+import com.sda.forecast.Forecast;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

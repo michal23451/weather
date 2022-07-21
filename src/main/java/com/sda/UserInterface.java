@@ -1,7 +1,10 @@
 package com.sda;
 
+import com.sda.forecast.ForecastClient;
+import com.sda.location.LocationController;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 @RequiredArgsConstructor
@@ -82,8 +85,8 @@ public class UserInterface {
         Integer id = scanner.nextInt();
         System.out.print("Podaj dzień, dla którego chcesz wyświetlić prognozę [0-dzisiaj, 1- jutro itd.]: ");
         Integer day = scanner.nextInt();
-        ExternalForacastClient externalForacastClient = new ExternalForacastClient();
-        System.out.println(externalForacastClient.getForacast(50,19, 0));
+        ForecastClient externalForacastClient = new ForecastClient();
+        System.out.println(externalForacastClient.getForacast(50,19, LocalDate.parse("2022-07-20")));
 
     }
 

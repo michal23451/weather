@@ -1,9 +1,12 @@
 package com.sda;
 
+import com.sda.location.Location;
+import com.sda.location.LocationRepository;
+
 import java.util.List;
 import java.util.Optional;
 
-public class LocationMockReposiroty implements LocationRepository{
+public class LocationMockReposiroty implements LocationRepository {
     @Override
     public Location save(Location location) {
         return null;

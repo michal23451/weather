@@ -3,11 +3,19 @@ package com.sda;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.forecast.Forecast;
+import com.sda.forecast.ForecastClient;
+import com.sda.forecast.ForecastDBRepository;
+import com.sda.forecast.ForecastRepository;
+import com.sda.location.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 public class Application {
@@ -25,11 +33,17 @@ public class Application {
 
         LocationRepository locationRepository = new LocationDBRepository(sessionFactory);
         LocationService locationService = new LocationService(locationRepository);
-        LocationController locationController = new LocationController(locationService,objectMapper);
+        LocationController locationController = new LocationController(locationService, objectMapper);
         UserInterface userInterface = new UserInterface(locationController);
         userInterface.run();
 
-        }
+        ForecastDBRepository forecastDBRepository = new ForecastDBRepository(sessionFactory);
+        Optional<Forecast> activeForecast = forecastDBRepository.getActiveForecast(new Location(), Instant.now(), Instant.now());
+        Forecast forecast = activeForecast.get();
+        System.out.println(forecast);
+
+    }
+
 }
 
 
