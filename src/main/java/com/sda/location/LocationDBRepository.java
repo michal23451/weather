@@ -1,6 +1,5 @@
 package com.sda.location;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,6 +11,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 public class LocationDBRepository implements LocationRepository {
+
     private final SessionFactory sessionFactory;
 
     public Location save(Location location) {

@@ -6,7 +6,8 @@ import com.sda.location.LocationRepository;
 import java.util.List;
 import java.util.Optional;
 
-public class LocationMockReposiroty implements LocationRepository {
+public class LocationMockRepository implements LocationRepository {
+
     @Override
     public Location save(Location location) {
         return null;

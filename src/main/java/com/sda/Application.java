@@ -1,24 +1,18 @@
 package com.sda;
 
-
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.forecast.Forecast;
-import com.sda.forecast.ForecastClient;
-import com.sda.forecast.ForecastDBRepository;
-import com.sda.forecast.ForecastRepository;
-import com.sda.location.*;
+import com.sda.location.LocationController;
+import com.sda.location.LocationDBRepository;
+import com.sda.location.LocationRepository;
+import com.sda.location.LocationService;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
 public class Application {
+
     public static void main(String[] args) {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -36,10 +30,7 @@ public class Application {
         LocationController locationController = new LocationController(locationService, objectMapper);
         UserInterface userInterface = new UserInterface(locationController);
         userInterface.run();
-
-
     }
-
 }
 
 

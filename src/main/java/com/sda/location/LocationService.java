@@ -17,16 +17,16 @@ public class LocationService {
         if (country == null || country.isBlank()) {
             throw new IllegalArgumentException("Należy podać kraj!");
         }
-        if (longitude < -180 || longitude > 180) {
+        if (longitude < -180 || longitude > 180) { // todo check null value
             throw new IllegalArgumentException("Długość geograficzna musi być z przedziału <-180,180>");
         }
-        if (latitude < -90 || latitude > 90) {
+        if (latitude < -90 || latitude > 90) { // todo check null value
             throw new IllegalArgumentException("Szerokość geograficzna musi być z przedziału <-90,90>");
         }
 
         Location location = new Location();
         location.setCity(city);
-        location.setRegion(region);
+        location.setRegion(region); // todo if region contains only white characters set null value
         location.setCountry(country);
         location.setLongitude(longitude);
         location.setLatitude(latitude);

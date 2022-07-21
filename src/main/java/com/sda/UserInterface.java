@@ -86,9 +86,6 @@ public class UserInterface {
         System.out.print("Podaj dzień, dla którego chcesz wyświetlić prognozę [0-dzisiaj, 1- jutro itd.]: ");
         Integer day = scanner.nextInt();
         ForecastClient externalForacastClient = new ForecastClient();
-        System.out.println(externalForacastClient.getForacast(50,19, LocalDate.parse("2022-07-20")));
-
+        System.out.println(externalForacastClient.getForecast(50,19, LocalDate.parse("2022-07-20")));
     }
-
-
 }

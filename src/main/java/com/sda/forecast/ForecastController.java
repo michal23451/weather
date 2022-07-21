@@ -5,7 +5,8 @@ public class ForecastController {
 
     //GET: /forecast?location={id}&date={day}
     //GET: /forecast?location={id}
-    public String getForacast(Long id, Integer day) {
+    public String getForecast(Long id, Integer day) {
+        // todo use ForecastService
         return null;
     }
 }
