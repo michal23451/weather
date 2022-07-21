@@ -11,6 +11,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import java.util.Optional;
 
 public class Application {
+
     public static void main(String[] args) {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -25,11 +26,10 @@ public class Application {
 
         LocationRepository locationRepository = new LocationDBRepository(sessionFactory);
         LocationService locationService = new LocationService(locationRepository);
-        LocationController locationController = new LocationController(locationService,objectMapper);
+        LocationController locationController = new LocationController(locationService, objectMapper);
         UserInterface userInterface = new UserInterface(locationController);
         userInterface.run();
-
-        }
+    }
 }
 
 
