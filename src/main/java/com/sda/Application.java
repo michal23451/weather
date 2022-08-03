@@ -12,6 +12,14 @@ import java.util.Scanner;
 
 @Slf4j
 public class Application {
+<<<<<<< HEAD
+=======
+
+    public static void main(String[] args) {
+        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure()
+                .build();
+>>>>>>> 54e8449ac945f1063767d2d4dc3b277b6761b551
 
     public static void main(String[] args) {
 
@@ -28,6 +36,7 @@ public class Application {
 
         LocationRepository locationRepository = new LocationRepositoryImpl(sessionFactory);
         LocationService locationService = new LocationService(locationRepository);
+<<<<<<< HEAD
         LocationController locationController = new LocationController(locationService, objectMapper, locationMapper);
 
         ForecastClient forecastClient = new ForecastClient(objectMapper);
@@ -41,6 +50,11 @@ public class Application {
 
         scanner.close();
         sessionFactory.close();
+=======
+        LocationController locationController = new LocationController(locationService, objectMapper);
+        UserInterface userInterface = new UserInterface(locationController);
+        userInterface.run();
+>>>>>>> 54e8449ac945f1063767d2d4dc3b277b6761b551
     }
 }
 
