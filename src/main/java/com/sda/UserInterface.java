@@ -1,27 +1,31 @@
 package com.sda;
 
+import com.sda.forecast.ForecastController;
+import com.sda.location.LocationController;
 import lombok.RequiredArgsConstructor;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @RequiredArgsConstructor
 public class UserInterface {
 
+    private final Scanner scanner;
     private final LocationController locationController;
+    private final ForecastController forecastController;
 
     public void run() {
-        System.out.println("Aplikacja jest uruchomiona\n");
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
+        System.out.println("Aplikacja jest uruchomiona.");
+        int option;
+        do {
             System.out.println("\nWitaj w aplikacji pogodowej. Co chcesz zrobić?");
             System.out.println("1. Dodać lokalizację.");
             System.out.println("2. Wyświetl wszystkie lokalizacje.");
             System.out.println("3. Pobierz dane pogodowe dla lokalizacji o podanym id.");
-            //System.out.println("9. TESTOWO - Wyświetl lokalizację o zadanym id.");
             System.out.println("0. Zamknąć aplikację.");
 
-            int option = scanner.nextInt();
+            //option = scanner.nextInt();
+            option = checkIntFromScanner();
             scanner.nextLine();
 
             switch (option) {
@@ -34,17 +38,16 @@ public class UserInterface {
                 case 3:
                     forecastById(scanner);
                     break;
-                case 9:
-                    locationById(scanner);
+                default:
+                    System.out.println("Niepoprawny wybór.");
                     break;
                 case 0:
-                    scanner.close();
                     return;
             }
-        }
+        } while (option != 0);
     }
 
-    public void createLocation(Scanner scanner) {
+    private void createLocation(Scanner scanner) {
         System.out.print("Podaj miejscowość: ");
         String city = scanner.nextLine();
         System.out.print("Podaj region: ");
@@ -52,40 +55,54 @@ public class UserInterface {
         System.out.print("Podaj kraj: ");
         String country = scanner.nextLine();
         System.out.print("Podaj długość geograficzną: ");
-        Integer longitude = scanner.nextInt();
+        int longitude = checkIntFromScanner();
         System.out.print("Podaj szerokość geograficzną: ");
-        Integer latitude = scanner.nextInt();
+        int latitude = checkIntFromScanner();
         String httpRequest = String.format("{\"city\":\"%s\",\"region\":\"%s\",\"country\":\"%s\",\"longitude\":%d,\"latitude\":%d}", city, region, country, longitude, latitude);
         System.out.println("Wysyłam HTTP request: " + httpRequest);
         String httpResponse = locationController.createLocation(httpRequest);
         System.out.println("Odpowiedź z serwera:  " + httpResponse);
     }
 
-    public void allLocation(Scanner scanner) {
+    private void allLocation(Scanner scanner) {
         System.out.println("Wszystkie lokalizacje:");
-        System.out.println("Wysyłam HTTP request: {\"location\":\"all\"}");
-        String httpResponse = locationController.getLocations();
+        String httpResponse = locationController.getAllLocations();
         System.out.println("Odpowiedź z serwera:  " + httpResponse);
     }
 
-    public void locationById(Scanner scanner) {
+    private void forecastById(Scanner scanner) {
         System.out.print("Podaj id lokalizacji: ");
-        Integer id = scanner.nextInt();
-        String httpRequest = String.format("{\"id\":\"%d\"}", id);
-        System.out.println("Wysyłam HTTP request: " + httpRequest);
-        String httpResponse = locationController.getLocationById(httpRequest);
-        System.out.println("Odpowiedź z serwera:  " + httpResponse);
+        long id = checkLongFromScanner();
+        System.out.print("Podaj dzień, dla którego chcesz wyświetlić prognozę [1- jutro itd., max 5]: ");
+        int day = checkIntFromScanner();
+        String httpResponse = forecastController.getForecast(id, day);
+        System.out.println("Odpowiedź z serwera: " + httpResponse);
     }
 
-    public void forecastById(Scanner scanner) {
-        System.out.print("Podaj id lokalizacji: ");
-        Integer id = scanner.nextInt();
-        System.out.print("Podaj dzień, dla którego chcesz wyświetlić prognozę [0-dzisiaj, 1- jutro itd.]: ");
-        Integer day = scanner.nextInt();
-        ExternalForacastClient externalForacastClient = new ExternalForacastClient();
-        System.out.println(externalForacastClient.getForacast(50,19, 0));
-
+    private int checkIntFromScanner() {
+        while (true) {
+            try {
+                int input = scanner.nextInt();
+                return input;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.print("Podana wartość musi być cyfrą! Podaj cyfrę: ");
+            }
+        }
     }
 
+    private long checkLongFromScanner() {
+        while (true) {
+            try {
+                long input = scanner.nextLong();
+                return input;
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
+                System.out.print("Podana wartość musi być cyfrą! Podaj cyfrę: ");
+            }
+        }
+    }
 
 }
+
+
