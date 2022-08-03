@@ -2,34 +2,45 @@ package com.sda;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.location.LocationController;
-import com.sda.location.LocationDBRepository;
-import com.sda.location.LocationRepository;
-import com.sda.location.LocationService;
+import com.sda.forecast.*;
+import com.sda.forecast.client.ForecastClient;
+import com.sda.location.*;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.util.Scanner;
+
+@Slf4j
 public class Application {
 
     public static void main(String[] args) {
-        StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure()
-                .build();
 
-        SessionFactory sessionFactory = new MetadataSources(registry)
-                .buildMetadata()
-                .buildSessionFactory();
+        Scanner scanner = new Scanner(System.in);
+
+        SessionFactory sessionFactory = HibernateUtils.getSessionFactory();
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        LocationRepository locationRepository = new LocationDBRepository(sessionFactory);
+        WindUnitMapper windUnitMapper = new WindUnitMapper();
+        ForecastMapper forecastMapper = new ForecastMapper(windUnitMapper);
+        LocationMapper locationMapper = new LocationMapper();
+
+        LocationRepository locationRepository = new LocationRepositoryImpl(sessionFactory);
         LocationService locationService = new LocationService(locationRepository);
-        LocationController locationController = new LocationController(locationService, objectMapper);
-        UserInterface userInterface = new UserInterface(locationController);
+        LocationController locationController = new LocationController(locationService, objectMapper, locationMapper);
+
+        ForecastClient forecastClient = new ForecastClient(objectMapper);
+        ForecastRepository forecastRepository = new ForecastRepositoryImpl(sessionFactory);
+        ForecastService forecastService = new ForecastService(forecastRepository, locationService, forecastClient, forecastMapper);
+        ForecastController forecastController = new ForecastController(forecastService, objectMapper, forecastMapper);
+
+        UserInterface userInterface = new UserInterface(scanner, locationController, forecastController);
         userInterface.run();
+
+
+        scanner.close();
+        sessionFactory.close();
     }
 }
 

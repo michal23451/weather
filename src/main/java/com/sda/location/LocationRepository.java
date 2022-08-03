@@ -8,5 +8,5 @@ public interface LocationRepository {
 
     List<Location> findAll();
 
-    Optional<Location> findById(Long id);
+    Optional<Location> findById(long id);
 }

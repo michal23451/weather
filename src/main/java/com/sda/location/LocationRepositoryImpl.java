@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class LocationDBRepository implements LocationRepository {
+public class LocationRepositoryImpl implements LocationRepository {
 
     private final SessionFactory sessionFactory;
 
@@ -49,7 +49,7 @@ public class LocationDBRepository implements LocationRepository {
     }
 
     @Override
-    public Optional<Location> findById(Long id) {
+    public Optional<Location> findById(long id) {
         Session session = sessionFactory.openSession();
         try {
             Transaction transaction = session.beginTransaction();
